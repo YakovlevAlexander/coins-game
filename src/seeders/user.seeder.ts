@@ -12,7 +12,7 @@ export const seedUsers = async() => {
       ],
     });
   } catch (e) {
-    console.error();
+    console.error(e);
   } finally {
     await prisma.$disconnect();
   }

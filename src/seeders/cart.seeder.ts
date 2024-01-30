@@ -2,13 +2,13 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const seedItems = async() => {
+export const seedCart = async() => {
   try {
-    await prisma.item.createMany({
+    await prisma.cart.createMany({
       data: [
-        { name: '123123' },
-        { name: '555555' },
-        { name: '789789' },
+        { userId: 1, itemId: 1, quantity: 1 },
+        { userId: 1, itemId: 2, quantity: 10 },
+        { userId: 2, itemId: 3, quantity: 5 },
       ],
     });
   } catch (e) {
