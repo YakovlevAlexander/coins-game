@@ -32,6 +32,6 @@ export class BaseService<T> {
   }
 
   async delete(id: number): Promise<T | null> {
-    return this.prisma[this.getModelName()].update({ where: { id }});
+    return this.prisma[this.getModelName()].delete({ where: { id }});
   }
 }
