@@ -8,3 +8,4 @@ npm run start
 # add password hashs (sha256 etc)
 # add authentification (jwt etc)
 # use logger
+# wrap queries by try-catch
