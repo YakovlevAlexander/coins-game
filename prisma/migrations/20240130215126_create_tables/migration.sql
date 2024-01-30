@@ -17,11 +17,13 @@ CREATE TABLE `Item` (
 
 -- CreateTable
 CREATE TABLE `Cart` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `itemId` INTEGER NOT NULL,
     `quantity` INTEGER NOT NULL,
 
-    PRIMARY KEY (`userId`, `itemId`)
+    UNIQUE INDEX `Cart_userId_itemId_key`(`userId`, `itemId`),
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey

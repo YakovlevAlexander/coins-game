@@ -1,6 +1,8 @@
 # run
 docker-compose build
 docker-compose up
+npm run migrate
+npm run build
 npm run seed
 npm run start
 

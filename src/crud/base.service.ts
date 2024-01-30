@@ -4,7 +4,7 @@ import { Prisma, PrismaClient } from '@prisma/client/index';
 @Injectable()
 export class BaseService<T> {
   constructor(
-    @Inject('PrismaClient') private readonly prisma: PrismaClient,
+    @Inject('PrismaClient') readonly prisma: PrismaClient,
     private readonly model: Prisma.ModelName,
   ) {}
 

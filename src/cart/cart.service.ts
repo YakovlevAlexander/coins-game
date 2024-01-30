@@ -8,7 +8,15 @@ export class CartService extends BaseService<Cart> {
     super(prisma, 'Cart');
   }
 
-  // getCart(userId)
-  // addItem(userId, itemId)
+  // async getCart(userId: number): Promise<Cart> {
+  //   const res = await this.findAll()
+  // }
+
+  // async addItem(userId: number, itemId: number): Promise<Cart> {
+  //   const currentOrder = await this.prisma.cart.findFirst({
+  //     where: { userId, itemId },
+  //   });
+  //   const updatedOrder = await this.update(currentOrder);
+  // }
   // removeItem(userId, ItemId)
 }

@@ -20,11 +20,12 @@ model Item {
 }
 
 model Cart {
+  id       Int  @id @default(autoincrement())
   user     User @relation(fields: [userId], references: [id])
   userId   Int
   item     Item @relation(fields: [itemId], references: [id])
   itemId   Int
   quantity Int
 
-  @@id([userId, itemId])
+  @@unique([userId, itemId], name: "user_item")
 }
