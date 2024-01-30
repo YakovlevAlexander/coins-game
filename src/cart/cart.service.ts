@@ -8,6 +8,7 @@ export class CartService extends BaseService<Cart> {
     super(prisma, 'Cart');
   }
 
-  // addItem
-  // removeItem
+  // getCart(userId)
+  // addItem(userId, itemId)
+  // removeItem(userId, ItemId)
 }

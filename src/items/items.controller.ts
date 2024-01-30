@@ -1,37 +1,44 @@
 import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
 import { PrismaClient, Item } from '@prisma/client';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { ItemsService } from './items.service';
 
 const prisma = new PrismaClient();
 
-@Controller()
+@Controller('/items')
+@ApiTags('items')
 export class ItemsController {
   @Get('/')
-  public getAll() {
+  @ApiResponse({ status: 200, description: 'Get items list' })
+  public async getAll(): Promise<Item[]> {
     const service = new ItemsService(prisma);
     return service.findAll();
   }
 
   @Get('/:id')
-  public getById(@Param('id') id: number) {
+  @ApiResponse({ status: 200, description: 'Get item by ID' })
+  public async getById(@Param('id') id: number): Promise<Item> {
     const service = new ItemsService(prisma);
     return service.findById(id);
   }
 
   @Post('/')
-  public create(@Body() body: Item) {
+  @ApiResponse({ status: 200, description: 'Add item' })
+  public async create(@Body() body: Item): Promise<Item> {
     const service = new ItemsService(prisma);
     return service.create(body);
   }
 
   @Post('/:id')
-  public update(@Param('id') id: number, @Body() body: Partial<Item>) {
+  @ApiResponse({ status: 200, description: 'Update item' })
+  public async update(@Param('id') id: number, @Body() body: Partial<Item>): Promise<Item> {
     const service = new ItemsService(prisma);
     return service.update(id, body);
   }
 
   @Delete('/:id')
-  public delete(@Param('id') id: number) {
+  @ApiResponse({ status: 200, description: 'Delete item by ID' })
+  public async delete(@Param('id') id: number): Promise<Item | null> {
     const service = new ItemsService(prisma);
     return service.delete(id);
   }
