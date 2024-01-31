@@ -1,14 +1,15 @@
 import { Controller, Get, Post, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { PrismaClient, User } from '@prisma/client';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { UsersService } from './users.service';
+import { CreateUserDto } from './create-user.dto';
 
 const prisma = new PrismaClient();
 
 @Controller('/users')
 @ApiTags('users')
 export class UsersController {
-  @Get('/')
+  @Get()
   @ApiResponse({ status: 200, description: 'Get users list' })
   async getAll(): Promise<User[]> {
     const service = new UsersService(prisma);
@@ -22,18 +23,20 @@ export class UsersController {
     return service.findById(id);
   }
 
-  @Post('/')
+  @Post()
+  @ApiBody({ type: CreateUserDto })
   @ApiResponse({ status: 200, description: 'Add new user' })
-  async create(@Body() body: User): Promise<User> {
+  async create(@Body() data: CreateUserDto): Promise<User> {
     const service = new UsersService(prisma);
-    return service.create(body);
+    return service.create(data);
   }
 
   @Post('/:id')
+  @ApiBody({ type: CreateUserDto })
   @ApiResponse({ status: 200, description: 'Update user by ID' })
-  async update(@Param('id', ParseIntPipe) id: number, @Body() body: Partial<User>): Promise<User> {
+  async update(@Param('id', ParseIntPipe) id: number, @Body() data: CreateUserDto): Promise<User> {
     const service = new UsersService(prisma);
-    return service.update(id, body);
+    return service.update(id, data);
   }
 
   @Delete('/:id')

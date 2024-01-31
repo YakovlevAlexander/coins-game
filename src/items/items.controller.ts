@@ -1,14 +1,15 @@
 import { Controller, Get, Post, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { PrismaClient, Item } from '@prisma/client';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { ItemsService } from './items.service';
+import { CreateItemDto } from './create-item.dto';
 
 const prisma = new PrismaClient();
 
 @Controller('/items')
 @ApiTags('items')
 export class ItemsController {
-  @Get('/')
+  @Get()
   @ApiResponse({ status: 200, description: 'Get items list' })
   async getAll(): Promise<Item[]> {
     const service = new ItemsService(prisma);
@@ -22,18 +23,20 @@ export class ItemsController {
     return service.findById(id);
   }
 
-  @Post('/')
+  @Post()
+  @ApiBody({ type: CreateItemDto })
   @ApiResponse({ status: 200, description: 'Add item' })
-  async create(@Body() body: Item): Promise<Item> {
+  async create(@Body() data: CreateItemDto): Promise<Item> {
     const service = new ItemsService(prisma);
-    return service.create(body);
+    return service.create(data);
   }
 
   @Post('/:id')
+  @ApiBody({ type: CreateItemDto })
   @ApiResponse({ status: 200, description: 'Update item' })
-  async update(@Param('id', ParseIntPipe) id: number, @Body() body: Partial<Item>): Promise<Item> {
+  async update(@Param('id', ParseIntPipe) id: number, @Body() data: CreateItemDto): Promise<Item> {
     const service = new ItemsService(prisma);
-    return service.update(id, body);
+    return service.update(id, data);
   }
 
   @Delete('/:id')

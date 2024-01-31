@@ -20,8 +20,8 @@ export class BaseService<T> {
     return this.prisma[this.getModelName()].findUnique({where: { id }});
   }
 
-  async create(data: T): Promise<T> {
-    return this.prisma[this.getModelName()].create(data);
+  async create(data: Partial<T>): Promise<T> {
+    return this.prisma[this.getModelName()].create({ data });
   }
 
   async update(id: number, data: Partial<T>): Promise<T> {
