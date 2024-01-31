@@ -13,21 +13,22 @@ export class CartService extends BaseService<Cart> {
     super(prisma, 'Cart');
   }
 
-  async getCart(userId: number): Promise<CartData[]> {
+  //userId - fill after validate jwt in version with authentification
+  async getCart(userId = 1): Promise<CartData[]> {
     const orders = await this.prisma.cart.findMany({
       where: { userId },
     });
     return orders.map((order) => ({ itemId: order.itemId, quantity: order.quantity }));
   }
 
-  async addItem(userId: number, itemId: number): Promise<Cart> {
+  async addItem(itemId: number, userId = 1): Promise<Cart> {
     const order = await this.prisma.cart.findFirst({
       where: { userId, itemId },
     });
     return this.update(order.id, {...order, quantity: order.quantity + 1});
   }
 
-  async removeItem(userId: number, itemId: number): Promise<Cart> {
+  async removeItem(itemId: number, userId = 1): Promise<Cart> {
     const order = await this.prisma.cart.findFirst({
       where: { userId, itemId },
     });

@@ -5,6 +5,7 @@ npm run migrate
 npm run build
 npm run seed
 npm run start
+http://localhost:3000/
 
 # TODO (not described in a task)
 # add password hashs (sha256 etc)

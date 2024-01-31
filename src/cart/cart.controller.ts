@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param } from '@nestjs/common';
+import { Controller, Get, Post, Param, ParseIntPipe } from '@nestjs/common';
 import { PrismaClient, Cart } from '@prisma/client';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { CartService, CartData } from './cart.service';
@@ -10,22 +10,22 @@ const prisma = new PrismaClient();
 export class CartController {
   @Get('/')
   @ApiResponse({ status: 200, description: 'Get cart' })
-  async getCart(@Param('id') userId: number): Promise<CartData[]> {
+  async getCart(): Promise<CartData[]> {
     const service = new CartService(prisma);
-    return service.getCart(userId);
+    return service.getCart();
   }
   
   @Post('add/:id')
   @ApiResponse({ status: 200, description: 'Add item' })
-  async addItem(@Param('id') userId: number, @Param('id') itemId: number): Promise<Cart> {
+  async addItem(@Param('id', ParseIntPipe) id: number): Promise<Cart> {
     const service = new CartService(prisma);
-    return service.addItem(userId, itemId);
+    return service.addItem(id);
   }
   
   @Post('remove/:id')
   @ApiResponse({ status: 200, description: 'Remove item' })
-  async removeItem(@Param('id') userId: number, @Param('id') itemId: number): Promise<Cart> {
+  async removeItem(@Param('id', ParseIntPipe) id: number): Promise<Cart> {
     const service = new CartService(prisma);
-    return service.addItem(userId, itemId);
+    return service.removeItem(id);
   }
 }

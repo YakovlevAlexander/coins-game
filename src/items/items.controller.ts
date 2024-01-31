@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { PrismaClient, Item } from '@prisma/client';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { ItemsService } from './items.service';
@@ -17,7 +17,7 @@ export class ItemsController {
 
   @Get('/:id')
   @ApiResponse({ status: 200, description: 'Get item by ID' })
-  async getById(@Param('id') id: number): Promise<Item> {
+  async getById(@Param('id', ParseIntPipe) id: number): Promise<Item> {
     const service = new ItemsService(prisma);
     return service.findById(id);
   }
@@ -31,14 +31,14 @@ export class ItemsController {
 
   @Post('/:id')
   @ApiResponse({ status: 200, description: 'Update item' })
-  async update(@Param('id') id: number, @Body() body: Partial<Item>): Promise<Item> {
+  async update(@Param('id', ParseIntPipe) id: number, @Body() body: Partial<Item>): Promise<Item> {
     const service = new ItemsService(prisma);
     return service.update(id, body);
   }
 
   @Delete('/:id')
   @ApiResponse({ status: 200, description: 'Delete item by ID' })
-  async delete(@Param('id') id: number): Promise<Item | null> {
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<Item | null> {
     const service = new ItemsService(prisma);
     return service.delete(id);
   }
