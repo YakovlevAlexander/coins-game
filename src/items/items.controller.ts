@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { PrismaClient, Item } from '@prisma/client';
 import { ApiTags, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { ItemsService } from './items.service';
@@ -31,7 +31,7 @@ export class ItemsController {
     return service.create(data);
   }
 
-  @Post('/:id')
+  @Put('/:id')
   @ApiBody({ type: CreateItemDto })
   @ApiResponse({ status: 200, description: 'Update item' })
   async update(@Param('id', ParseIntPipe) id: number, @Body() data: CreateItemDto): Promise<Item> {
