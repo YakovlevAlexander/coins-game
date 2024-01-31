@@ -8,7 +8,7 @@ npm run seed
 cp .env.example .env
 npm run start
 http://localhost:3000/
-``
+```
 # TODO (not described in a task)
 ```
 add password hashes (sha256 etc)
